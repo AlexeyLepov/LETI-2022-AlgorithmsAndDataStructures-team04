@@ -172,7 +172,7 @@ int main(){
 
     A_and_B_not_C(C,W);
 
-    cout<<"AandBwithoutC = ";
+    cout<<"AandBnotC = ";
     print_list(W);
     cout << endl;
 
@@ -221,7 +221,7 @@ int main(){
         node0 = work2;
         work2=work2->next;
     }
-    cout<<"E = ";
+    cout<<"AandBnotCorD = ";
     print_list(W);
     return 0;
     work1=W->first;

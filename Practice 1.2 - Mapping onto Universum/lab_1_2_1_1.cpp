@@ -56,14 +56,14 @@ int main()
 
     cout << "A and B without C or D = " << bE << endl;
 
+    cout << "result: ";
+
     for (int i =0, k = 0;i<m;i++){
         if (bE[i]==1){
             E[k]=U[i];
             k++;
-            
         }
     }
     cout << E << endl;
-
     return 0;
 }
