@@ -32,21 +32,16 @@ class Tree{
         
     public:
         Tree ();
-        void print_arr_node();
-        void set_right();
-        void set_left();
-        void set_middle();
-        void print_lmr();
-        void print_graph();
-        void set_SCREEN();
-        void print_ur();
-        void show();
-        void OutTree();
-        void OutNodes(Node *v, int r, int c);
-        void Outleft (Node *v);
-        int BFS();
-        int find_tz();
-        void show_tz();
+        void set_right(); //установка правых
+        void set_left();//установка левых
+        void set_middle();//установка средних
+        void print_graph();//печать графа
+        void set_SCREEN();//установка пустого графа
+        void OutTree();//печать дерева
+        void OutNodes(Node *v, int r, int c);//заполнение рекурсией памяти
+        int BFS();//поиск в ширину
+        int find_tz();//поиск количества вершин без предков
+        void show_tz();//показ количества вершин без предков
 };
 
 void Tree::show_tz(){
@@ -59,30 +54,30 @@ int Tree::find_tz(){
     pom = new bool [nv];
     for (int i=0; i<nv; i++) pom[i]=0;
     for (int i=0; i<nv; i++){
-        if(N1[i].lft) pom[N1[i].lft->d] = 1;
+        if(N1[i].lft) pom[N1[i].lft->d] = 1;//пометки соответсвенных вершин существования
         if(N1[i].rgt) pom[N1[i].rgt->d] = 1;
         if(N1[i].mdl) pom[N1[i].mdl->d] = 1;
         
     }
-    for (int i=0; i<nv; i++) tz+=pom[i];
+    for (int i=0; i<nv; i++) tz+=pom[i];//подсчёт верных вершин
     return tz;
 }
 
 int Tree::BFS(){
     int count = 0;
     queue <Node*> Q;
-    Q.push(root);
-    while (!Q.empty()){
-        Node *v = Q.front(); Q.pop();
-        cout << v->d << ' '; ++count;
-        if (v->lft) Q.push(v->lft);
+    Q.push(root);//впихиваем первый
+    while (!Q.empty()){//пока не пустой список
+        Node *v = Q.front(); Q.pop(); //выбираем первый в очереди
+        cout << v->d << ' '; ++count; //печать выбранного элемента
+        if (v->lft) Q.push(v->lft); //вставка в очередь сыновей
         if (v->mdl) Q.push(v->mdl);
         if (v->rgt) Q.push(v->rgt);
     }
-    return count;
+    return count; // вывод колва обработанных элементов
 }
 
-void Tree::set_SCREEN(){
+void Tree::set_SCREEN(){ //уставновка начальной памяти в определённый символ
     SCREEN = new char *[4];
     int i, j;
     for (i=0; i<4; i++){
@@ -90,7 +85,7 @@ void Tree::set_SCREEN(){
     }
     for (i=0; i<4; i++){
         for (j=0; j<80; j++){
-            SCREEN[i][j]='-';
+            SCREEN[i][j]='_';
         }
     }
 }
@@ -149,39 +144,39 @@ void Tree::set_middle(){
     file2.close();
 }
 
-Tree::Tree(){
+Tree::Tree(){//главный конструктор дерева
     ifstream file1;
     int k;
     file1.open("tags.txt");
-    file1 >> nv;
-    N1 = new Node [nv];
+    file1 >> nv;//установка количества вершин
+    N1 = new Node [nv];//памято по вершины
     for (int i=0; i<nv;i++){
         file1 >> k;
-        N1[i].set_node(k);
+        N1[i].set_node(k);//создание вершины
         N1[i].lft=NULL;
         N1[i].rgt=NULL;
         N1[i].mdl=NULL;
     }
-    this->set_left();
+    this->set_left();//установка массива левых индексов
     this->set_right();
     this->set_middle();
     file1.close();
-    for (int i=0; i<nv; i++){
-        if (this->left[i]!=0) N1[i].lft = &N1[this->left[i]];//number?
+    for (int i=0; i<nv; i++){//склейка вершин в дерево
+        if (this->left[i]!=0) N1[i].lft = &N1[this->left[i]];
         if (this->right[i]!=0) N1[i].rgt = &N1[this->right[i]];
         if (this->middle[i]!=0) N1[i].mdl = &N1[this->middle[i]];
     }
-    set_SCREEN();
+    set_SCREEN();//установка памяти для печати
     offset = 79;
     root = &N1[0];
 }
 
 int main(){
-    Tree T1;
-    T1.OutTree();
+    Tree T1;//создание дерева
+    T1.OutTree();//печать дерева
     cout << endl;
     cout << "bypass in breadth: ";
-    T1.BFS();
+    T1.BFS();//поиск в ширину с соответствующим выводом
     cout << endl;
     cout << "Answer: ";
     T1.show_tz();
