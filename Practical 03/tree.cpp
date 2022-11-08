@@ -122,6 +122,7 @@ void Tree::OutNodes(Node *v, int r, int c)
 int Tree :: BFS( )
 {
     int count = 0;
+    int countLeaf = 0;
     queue < Node * > Q;     // создание очереди указателей на узлы
     Q.push(root);           // поместить в очередь корень дерева
     while (!Q.empty( ))     // пока очередь не пуста
@@ -131,8 +132,9 @@ int Tree :: BFS( )
         if (v->lft) Q.push(v->lft); // Q <- (левый сын)
         if (v->mdl) Q.push(v->mdl);
         if (v->rgt) Q.push(v->rgt); // Q <- (правый сын)
+        if ((v->lft)==null && (v->mdl)==null && (v->rgt)==null) countLeaf++;
     }
-    return count;
+    return countLeaf;
 }
 
 
