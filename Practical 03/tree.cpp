@@ -4,7 +4,9 @@
 #include <queue>
 #include <cstring>
 
+
 using namespace std;
+
 
 class Node
 {
@@ -18,6 +20,8 @@ class Node
     ~Node(){if(lft) delete lft; if (rgt) delete rgt; if(mdl) delete mdl;}
     friend class Tree;
 };
+
+
 class Tree
 {
     Node * root;
@@ -25,8 +29,8 @@ class Tree
     int maxrow, offset;
     int numel;
     char ** SCREEN;
-    void clrscr( );//*
-    Node* MakeNode(int depth); //*
+    void clrscr( );
+    Node* MakeNode(int depth);
     void OutNodes(Node * v, int r, int c);
     Tree (const Tree &);
     Tree (Tree &&);
@@ -34,8 +38,8 @@ class Tree
     Tree operator = (Tree &&) const;
 
     public:
-    Tree(char num, char maxnum, int maxrow);   //*
-    ~Tree(); //*
+    Tree(char num, char maxnum, int maxrow);
+    ~Tree();
     void MakeTree()
     {
         root = MakeNode(0);
@@ -54,12 +58,11 @@ class Tree
 };
 
 
-Tree ::   Tree(char nm, char mnm, int mxr):
-    num(nm), maxnum(mnm), maxrow(mxr), offset(40), root(nullptr),
-    SCREEN(new char * [maxrow]), numel(0)
-    {
-         for(int i = 0; i < maxrow; ++i) SCREEN[ i ] = new char[80];
-    }
+Tree ::   Tree(char nm, char mnm, int mxr): num(nm), maxnum(mnm), maxrow(mxr), offset(40), root(nullptr), SCREEN(new char * [maxrow]), numel(0)
+{
+    for(int i = 0; i < maxrow; ++i) SCREEN[ i ] = new char[80];
+}
+
 
 Tree :: ~Tree( )
 {
@@ -67,6 +70,7 @@ Tree :: ~Tree( )
         delete [ ]SCREEN[i];
     delete [ ] SCREEN; delete root;
 }
+
 
 Node * Tree :: MakeNode(int depth)
 {
@@ -102,7 +106,7 @@ void Tree::OutTree()
 void Tree :: clrscr( )
 {
     for(int i = 0; i < maxrow; ++i)
-        memset(SCREEN[ i ], '.', 80);
+        memset(SCREEN[ i ], '_', 80);
 }
 
 
@@ -121,20 +125,20 @@ void Tree::OutNodes(Node *v, int r, int c)
 
 int Tree :: BFS( )
 {
-    int count = 0;
-    int countLeaf = 0;
+    int countHasParant = 0; // количество узлов, имеющих предка
+    int countLeaves = 0; // количество листьев
     queue < Node * > Q;     // создание очереди указателей на узлы
     Q.push(root);           // поместить в очередь корень дерева
     while (!Q.empty( ))     // пока очередь не пуста
     {
         Node * v = Q.front( ); Q.pop( );    // взять из очереди,
-        cout << v->d << '_'; ++count;       // выдать тег, счёт узлов
+        cout << v->d << '_'; ++countHasParant;       // выдать тег, счёт узлов
         if (v->lft) Q.push(v->lft); // Q <- (левый сын)
-        if (v->mdl) Q.push(v->mdl);
+        if (v->mdl) Q.push(v->mdl); // Q <- (средний сын)
         if (v->rgt) Q.push(v->rgt); // Q <- (правый сын)
-        if ((v->lft)==null && (v->mdl)==null && (v->rgt)==null) countLeaf++;
+        if ((v->lft)==NULL && (v->mdl)==NULL && (v->rgt)==NULL) countLeaves++;
     }
-    return countLeaf;
+    return countLeaves;
 }
 
 
@@ -149,7 +153,8 @@ int main()
         n=Tr.BFS();
         cout << '\n';
         cout << "Number of vertices from BFC: " << n << '\n';
-        cout << "Number of vertices that have ancestors: " << Tr.show_numel()-1 << '\n';
+        // cout << "Number of vertices that have ancestors: " << Tr.show_numel()-1 << '\n'; // вывод количества узлов, имеющих предка
+        cout << "Number of leaves: " << Tr.show_numel()-1 << '\n'; // вывод количества листьев
     }
     return 0;
 }
