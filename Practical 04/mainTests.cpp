@@ -9,7 +9,7 @@ int main(void)
     // time test variables
     clock_t t;
     double timeCreate, timeProcess, timePrint, s=0;
-    int n=0;
+    int n=0, testCount=1000;
 
     const int N = 16;
     vector<string> nodes(N);
@@ -29,7 +29,7 @@ int main(void)
     vector<string> lines = split(SR, '\n');
 
     // Creating an Adjacency Matrix
-    for (int itime=0; itime<1000; itime++){
+    for (int itime=0; itime<testCount; itime++){
     t=0;
     t=clock();
         for (int i = 0; i < lines.size(); i++)
@@ -46,10 +46,10 @@ int main(void)
         t=clock()-t;
         s+=t;
     }
-    timeCreate = (s/1000)*0.017;
+    timeCreate = (s/testCount)*0.017;
 
     // Run algorithm
-    for (int itime=0; itime<1000; itime++){
+    for (int itime=0; itime<testCount; itime++){
         t=0;
         t=clock();
         ElementaryCyclesSearch ecs = ElementaryCyclesSearch(adjMatrix, nodes);
@@ -57,13 +57,13 @@ int main(void)
         t=clock()-t;
         s+=t;
     }
-    timeProcess = (s/1000)*0.017;
+    timeProcess = (s/testCount)*0.017;
 
     ElementaryCyclesSearch ecs = ElementaryCyclesSearch(adjMatrix, nodes);
     vector<vector<string> > cycles = ecs.getElementaryCycles();
 
     // Print result
-    for (int itime=0; itime<1000; itime++)
+    for (int itime=0; itime<testCount; itime++)
     {
         t=0;
         t=clock();
@@ -87,7 +87,7 @@ int main(void)
         t=clock()-t;
         s+=t;
     }
-    timePrint = (s/1000)*0.017;
+    timePrint = (s/testCount)*0.017;
 
     cout << "\n====================================================\n"  << endl;
     cout << "Creating an Adjacency Matrix time:"  << endl;
