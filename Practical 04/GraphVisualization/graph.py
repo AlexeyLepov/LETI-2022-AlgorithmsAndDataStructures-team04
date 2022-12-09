@@ -6,26 +6,6 @@ import networkx as nx
 G = nx.MultiDiGraph()
 rad = 0
 
-# G.add_nodes_from([
-#     (0, {"color": "red"}),
-#     (1, {"color": "red"}),
-#     (2, {"color": "red"}),
-#     (3, {"color": "red"}),
-#     (4, {"color": "red"}),
-#     (5, {"color": "red"}),
-#     (6, {"color": "red"}),
-#     (7, {"color": "green"}),
-#     (8, {"color": "green"}),
-#     (9, {"color": "green"}),
-#     (10, {"color": "red"}),
-#     (11, {"color": "red"}),
-#     (12, {"color": "red"}),
-#     (13, {"color": "red"}),
-#     (14, {"color": "red"}),
-#     (11, {"color": "red"}),
-#     (15, {"color": "red"}),
-# ])
-
 
 G.add_edges_from([
     (0, 1),
